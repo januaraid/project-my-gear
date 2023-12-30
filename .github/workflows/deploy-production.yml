@@ -25,10 +25,13 @@ jobs:
           channelId: live
           projectId: project-my-gear
       - name: Install dependencies
-        run: npm install -C functions
-      - name: Deploy to Firebase
+        run: |
+          cd functions
+          pip install -r requirements.txt
+      - name: Deploy to Firebase Functions
         uses: w9jds/firebase-action@master
         with:
           args: deploy --only functions
         env:
           GCP_SA_KEY: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_PROJECT_MY_GEAR }}'
+          PROJECT_ID: project-my-gear
